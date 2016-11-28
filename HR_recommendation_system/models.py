@@ -12,6 +12,6 @@ class postgres(models.Model):
 
 	def login(self, credentials):
 		with connection.cursor() as cursor:
-			cursor.execute("SELECT username FROM credentials WHERE username=\'%s\' AND password=\'%s\'"%(credentials['username'],credentials['password']))
+			cursor.execute("SELECT id FROM credentials WHERE id=\'%s\' AND password=\'%s\'"%(credentials['username'],credentials['password']))
 			row = cursor.fetchall()
 		return row

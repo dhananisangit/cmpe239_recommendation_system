@@ -11,3 +11,18 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 
 def index(request):
     return render(request, "index.html")
+
+def home(request):
+    return render(request, "home.html")
+
+
+@ensure_csrf_cookie
+@api_view(['POST'])
+def login(request):
+    if request.method == 'POST':
+        database = postgres()
+        user = database.login(request.data)
+        return Response(user)
+
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
