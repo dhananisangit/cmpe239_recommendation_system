@@ -26,3 +26,24 @@ def login(request):
 
     else:
         return Response(status.HTTP_400_BAD_REQUEST)
+
+@ensure_csrf_cookie
+@api_view(['POST'])
+def register(request):
+    if request.method == 'POST':
+        database = postgres()
+        user = database.register(request.data)
+        return Response(user)
+
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def getChallenges(request):
+    if request.method == 'GET':
+        database = postgres()
+        posts = database.getChallenges()
+        return Response(posts)
+
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)

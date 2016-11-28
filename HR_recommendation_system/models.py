@@ -15,3 +15,14 @@ class postgres(models.Model):
 			cursor.execute("SELECT id FROM credentials WHERE id=\'%s\' AND password=\'%s\'"%(credentials['username'],credentials['password']))
 			row = cursor.fetchall()
 		return row
+
+	def register(self, credentials):
+		with connection.cursor() as cursor:
+			cursor.execute("INSERT INTO credentials (id, password) VALUES(\'%s\', \'%s\')"%(credentials['username'],credentials['password']))
+		return "done"
+
+	def getChallenges(self):
+		with connection.cursor() as cursor:
+			cursor.execute("SELECT * FROM challenges")
+			row = cursor.fetchall()
+		return row
