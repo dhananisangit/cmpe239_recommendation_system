@@ -1,0 +1,38 @@
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>
+{% load static %}<link rel="stylesheet" href="{% static 'css/style.css' %}"></script> 
+<script>    
+var ims = angular.module("ims", []);
+ims.controller('home_ctrl', function($scope,$http,$window){
+
+    $http({
+        method:"GET",
+        url:'v1/getallrecs',
+        }).then(function(res){
+            $scope.challengeDetails = res.data;
+        })
+
+});
+</script>
+{% verbatim %}
+<body ng-app="ims" ng-controller="home_ctrl">
+<div id="wrapper">
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12" text-align="center">
+                   <h1>Home Page</h1><br/>
+                </div>
+            </div>
+            <div ng-repeat="data in challengeDetails">
+            <h4>{{data}}</h4>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+{% endverbatim %}

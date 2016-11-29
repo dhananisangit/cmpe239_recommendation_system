@@ -82,13 +82,24 @@ WSGI_APPLICATION = 'cmpe239.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'sdhanani',
+#         'USER': 'sdhanani',
+#         'PASSWORD': 'password',
+#         'HOST': 'localhost',
+#         'PORT': '',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sdhanani',
-        'USER': 'sdhanani',
+        'NAME': 'myproject',
+        'USER': 'myprojectuser',
         'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'HOST': '10.200.1.30',
         'PORT': '',
     }
 }

@@ -36,9 +36,10 @@ ims.controller('login_page_ctrl', function($scope,$http,$location,$window){
                 password:$scope.lpassword
             },
             }).then(function(res){
-                console.log("hey");
                 if(res.data!=0)  {
-                    sessionStorage.setItem('username',$scope.lemailID);
+                    sessionStorage.setItem('username',res.data[0][0]);
+                    sessionStorage.setItem('user_id',res.data[0][1]);
+
                     $window.location.href='home';
                 }
                 else swal("Failed", "Wrong username or password. Please try again!", "error");
@@ -75,7 +76,7 @@ ims.controller('login_page_ctrl', function($scope,$http,$location,$window){
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12" text-align="center">
-                        <h1><center>Inventory Management System</center></h1> 
+                        <h1><center>Hacker Rank Recommendation System</center></h1> 
                             <h1 ng-click="login=!login"><center>Sign In or Register</center></h1>
                     </div>
                 </div>

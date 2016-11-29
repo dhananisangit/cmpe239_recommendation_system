@@ -11,6 +11,7 @@ ims.controller('home_ctrl', function($scope,$http,$window){
 
     $scope.showDetails = false;
     $scope.showRec = false;
+    $scope.user_id = sessionStorage.getItem('user_id')
     $http({
             method:"GET",
             url:'v1/getchallenges',
@@ -32,6 +33,21 @@ ims.controller('home_ctrl', function($scope,$http,$window){
         $scope.showDetails = data;
         $scope.challenge_id = challenge_id
     }
+
+    $scope.calculateRec = function(){
+        $scope.showRec = true;
+        console.log($scope.user_id)
+          $http({
+            method:"POST",
+            url:'v1/getallrecs',
+            data:{
+                id:$scope.user_id
+            },
+            }).then(function(res){
+                console.log(res.data)
+            })
+    }
+
 
 });
 </script>
@@ -84,10 +100,10 @@ ims.controller('home_ctrl', function($scope,$http,$window){
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-3">
-                                <input type="submit" style="color:black" value="Run Code"  ng-click="showRec=!showRec">
+                                <input type="submit" style="color:black" value="Run Code"  ng-click="calculateRec()">
                             </div>
                             <div class="col-sm-3">
-                                <input type="submit" style="color:black" value="Submit" ng-click="showRec=!showRec">
+                                <input type="submit" style="color:black" value="Submit" ng-click="calculateRec()">
                             </div>
                         </div>
                     </div>
