@@ -27,7 +27,7 @@ SECRET_KEY = '3#odv4$ki4f+!0zl481l4jmc9+ivkv)k=b*j8s-4mgt50*ukf^'
 DEBUG = True
 
 #ALLOWED_HOSTS = [yourappname.herokuapp.com]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [blooming-basin-50927.herokuapp.com]
 
 
 # Application definition
