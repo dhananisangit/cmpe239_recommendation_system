@@ -152,7 +152,7 @@ USE_TZ = True
 
 
 ## new stuff
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_ROOT = os.path.join(cmpe239, 'staticfiles')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
