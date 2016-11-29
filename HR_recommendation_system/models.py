@@ -1,12 +1,9 @@
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 from django import forms
 from django.db import connection
 import re, json
-# Create your models here.
-
 
 class postgres(models.Model):
 
@@ -30,8 +27,17 @@ class postgres(models.Model):
 	def getAllRecs(self, id):
 		d =json.dumps(id)
 		s = json.loads(d)
-		print s
 		with connection.cursor() as cursor:
 			cursor.execute("SELECT * FROM recs WHERE hacker_id=\'%s\'"%s['id'])
 			row = cursor.fetchall()
+			cursor.execute("DELETE FROM challenges WHERE challenge_id=\'%s\'"%s['challenge_id'])
+		return row
+
+	def successfulSubmission(self, data):
+		d =json.dumps(data)
+		s = json.loads(d)
+		with connection.cursor() as cursor:
+			cursor.execute("SELECT * FROM recs WHERE hacker_id=\'%s\'"%s['id'])
+			row = cursor.fetchall()
+			cursor.execute("INSERT INTO submission(hacker_id, challenge_id) VALUES(\'%s\', \'%s\') "%(s['hacker_id'],s['challenge_id']))
 		return row
