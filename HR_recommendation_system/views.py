@@ -63,4 +63,15 @@ def getAllRecs(request):
 
 	else:
 		return Response(status.HTTP_400_BAD_REQUEST)
+
+@ensure_csrf_cookie
+@api_view(['POST'])
+def processSubmisson(request):
+	if request.method == 'POST':
+		model = buildModel()
+		user = model.naiveBayes(request.data)
+		return Response(user)
+
+	else:
+		return Response(status.HTTP_400_BAD_REQUEST)
 		

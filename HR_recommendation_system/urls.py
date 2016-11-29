@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'v1/register$', views.register),
     url(r'v1/getchallenges$', views.getChallenges),
     url(r'v1/getallrecs$', views.getAllRecs),
+    url(r'v1/submission$', views.getAllRecs),
 ]

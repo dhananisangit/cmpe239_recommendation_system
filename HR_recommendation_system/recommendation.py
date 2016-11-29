@@ -1,14 +1,13 @@
 import pandas as pd
 from heapq import nlargest
 from operator import itemgetter
-import csv
 from django.db import connection
 
 ##load data
 class buildModel():
-	def naiveBayes(self):  
+	def naiveBayes(self, id):  
 		with connection.cursor() as cursor:
-			cursor.execute("SELECT * from submissions")
+			cursor.execute("SELECT * from submissions WHERE hacker_id=\'%s\'"%id)
 			submissions_df = cursor.fetchall()
 			cursor.execute("SELECT * from challenges")
 			challenges_df = cursor.fetchall()
@@ -82,7 +81,7 @@ class buildModel():
 								graph[cid1]={cid2:1}
 			return
 
-		##function to generate final csv
+		##function to generate final 
 		def create_top(d, filled, out, n, solved):
 			total = 0
 			topitems = nlargest(n+len(solved), sorted(d.items()), key=itemgetter(1))
@@ -100,18 +99,22 @@ class buildModel():
 			return total
 			
 
-		##Create predict csv
-		out = open('result.csv', "w")
+		##Create prediction
 
 		for hackerID, challenges in users_submissions.iteritems():
-			out.write(hackerID)
+			#out.write(hackerID)
+			#if new user completes a challenge for first time
+			with connection.cursor() as cursor:
+				cursor.execute("INSERT INTO recs (id) VALUES(\'%s\')"%id)
 			filled=[]
 			
 			i=0
 			for clg in uusers_solved.get(hackerID,{}):
 				if clg not in users_solved.get(hackerID,{}):
-					out.write(',')
-					out.write(clg)
+					# out.write(',')
+					# out.write(clg)
+					with connection.cursor() as cursor:
+						cursor.execute("INSERT INTO recs(col20) VALUES(\'%s\') WHERE haacker_id=\'%s\'"%(rec, id))
 					i += 1
 					if i >= 10:
 						break
