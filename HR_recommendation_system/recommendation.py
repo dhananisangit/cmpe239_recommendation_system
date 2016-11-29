@@ -11,21 +11,12 @@ class buildModel():
 			submissions_df = cursor.fetchall()
 			cursor.execute("SELECT * from challenges")
 			challenges_df = cursor.fetchall()
-
-		##list all challenges  
+ 
 		##building a model for a particular contest
-		challendes_vld = challenges_df[challenges_df['contest_id']=='c8ff662c97d345d2']['challenge_id'].tolist()
 		challendes_vld = set(challendes_vld)
-
-		##generate challenge frequancy table
-		challenges_top=submissions_df[submissions_df['contest_id']=='c8ff662c97d345d2'][['hacker_id','challenge_id']].drop_duplicates()['challenge_id'].value_counts().to_dict()
 
 		##hacker's submissions
 		users_submissions = submissions_df.groupby('hacker_id')['challenge_id'].apply(set)
-		##harker's solved
-		users_solved = submissions_df[(submissions_df['solved']==1)& (submissions_df['contest_id']=='c8ff662c97d345d2')].groupby('hacker_id')['challenge_id'].apply(set)
-		##harker's unsolved(may solved lately)
-		uusers_solved = submissions_df[(submissions_df['solved']==0) & (submissions_df['contest_id']=='c8ff662c97d345d2')].groupby('hacker_id')['challenge_id'].apply(set)
 
 		##Create cohort pair count
 		graph={}
