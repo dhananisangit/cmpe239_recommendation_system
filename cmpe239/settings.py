@@ -85,8 +85,8 @@ WSGI_APPLICATION = 'cmpe239.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'sdhanani',
-        'USER': 'sdhanani',
+        'NAME': 'savanthakker',
+        'USER': 'savanthakker',
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',

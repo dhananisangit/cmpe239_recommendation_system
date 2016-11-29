@@ -15,6 +15,8 @@ def index(request):
 def home(request):
     return render(request, "home.html")
 
+def template(request):
+    return render(request, "template.html")
 
 @ensure_csrf_cookie
 @api_view(['POST'])
