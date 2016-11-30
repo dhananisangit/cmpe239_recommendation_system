@@ -27,11 +27,18 @@ class postgres(models.Model):
 	def getAllRecs(self, id):
 		d =json.dumps(id)
 		s = json.loads(d)
+		rec = []
 		with connection.cursor() as cursor:
 			cursor.execute("SELECT * FROM recs WHERE hacker_id=\'%s\'"%s['id'])
 			row = cursor.fetchall()
-			cursor.execute("DELETE FROM challenges WHERE challenge_id=\'%s\'"%s['challenge_id'])
-		return row
+			for i in range(1, len(row[0])):
+				challenge_id =  str(row[0][i]).strip()
+				cursor.execute("SELECT * FROM challenges WHERE challenge_id=\'%s\'"%challenge_id)
+				r = cursor.fetchall()
+				rec.append(r)
+				i=i+1
+			#cursor.execute("DELETE FROM challenges WHERE challenge_id=\'%s\'"%s['challenge_id'])
+		return rec
 
 	def successfulSubmission(self, data):
 		d =json.dumps(data)

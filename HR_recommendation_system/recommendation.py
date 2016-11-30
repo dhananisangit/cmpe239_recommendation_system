@@ -18,12 +18,12 @@ class buildModel():
 		##hacker's submissions
 		users_submissions = submissions_df.groupby('hacker_id')['challenge_id'].apply(set)
 
-		##Create cohort pair count
+		##Create pair count
 		graph={}
 		for hackerID, challenges in users_submissions.iteritems():
 			add_graph(graph,challenges,challendes_vld)
 			
-		##Create cohort predict
+		##Create predict
 		users_cohort={}
 		for hackerID, challenges in users_submissions.iteritems():
 			coh={}
@@ -39,7 +39,7 @@ class buildModel():
 							coh[cl]=cnt
 			users_cohort[hackerID]=coh
 
-		##Create solved cohort predict
+		##Create solved predict
 		users_cohort_slv={}
 		for hackerID, challenges in users_solved.iteritems():
 			coh={}
@@ -55,7 +55,7 @@ class buildModel():
 							coh[cl]=cnt
 			users_cohort_slv[hackerID]=coh
 
-		##function to create cohort pair
+		##function to create pairs
 		def add_graph(graph, sub_set, contest_set):
 			for cid1 in sub_set:
 				for cid2 in sub_set:

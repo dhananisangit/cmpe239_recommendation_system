@@ -105,6 +105,7 @@
 
                 $scope.showDetails = false;
                 $scope.showRec = false;
+                $scope.user_id = sessionStorage.getItem('user_id')
                 $scope.dtOptions = DTOptionsBuilder.newOptions().withPaginationType('full_numbers').withDisplayLength(25).withOption('order', [1, 'desc']);;
                 $scope.dtColumnDefs = [
                     DTColumnDefBuilder.newColumnDef(0),
@@ -149,10 +150,10 @@
                         url:'v1/getallrecs',
                         data:{
                             id:$scope.user_id,
-                            challenge_id:$scope.challenge_id
+                            challenge_id:$scope.challengeData
                         },
                         }).then(function(res){
-                            
+                            console.log(res.data)
                         })
                 }
 
@@ -307,7 +308,7 @@
                 <textarea>System.out.println("Hello world!!");</textarea>
                 <div class="pull-right" style="margin: 15px;">
                     <button type="button" class="btn btn-default">Run Code</button>&nbsp;&nbsp;
-                    <button type="button" class="btn btn-primary" ng-click="">Submit Code</button>
+                    <button type="button" class="btn btn-primary" ng-click="calculateRec()">Submit Code</button>
                 </div>
             </div>
 

@@ -85,10 +85,6 @@ class apriori():
             currentLSet = currentCSet
             k = k + 1
 
-        def getSupport(item):
-                """local function which Returns the support of an item"""
-                return float(freqSet[item])/len(transactionList)
-
         toRetItems = []
         for key, value in largeSet.items():
             toRetItems.extend([(tuple(item), getSupport(item))
@@ -107,7 +103,10 @@ class apriori():
                                                confidence))
         return toRetItems, toRetRules
 
-
+    def getSupport(item):
+            """local function which Returns the support of an item"""
+            return float(freqSet[item])/len(transactionList)
+            
     def generateResults(items, rules):
         """returns the generated itemsets sorted by support and the confidence rules sorted by confidence"""
         for item, support in sorted(items, key=lambda (item, support): support):
