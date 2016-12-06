@@ -48,3 +48,20 @@ class postgres(models.Model):
 			row = cursor.fetchall()
 			cursor.execute("INSERT INTO submission(hacker_id, challenge_id) VALUES(\'%s\', \'%s\') "%(s['hacker_id'],s['challenge_id']))
 		return row
+
+	def convertTOFloat(self, data):
+		with connection.cursor() as cursor:
+			cursor.execute("select s.challenge_id, c.subdomain, s.solved from submissions as s INNER JOIN challenges as c on s.challenge_id=c.challenge_id")
+		return row
+		
+	def insertToFloat(self, data):
+		with connection.cursor() as cursor:
+			cursor.execute("INSERT INTO final (challenge_id, subdomain, solved) VALUES(\'%f\', \'%f\', \'%f\')"%(final['challenge_id'],final['subdomain'],final['solved']))
+			row = cursor.fetchall()
+		return row
+		
+	def Classify(self, data):
+		with connection.cursor() as cursor:
+			cursor.execute("select distinct hacker_id, sum(solved) AS correct, count(solved) AS total from submissions group by hacker_id,challenge_id order by correct DESC")
+			row = cursor.fetchall()
+		return row 

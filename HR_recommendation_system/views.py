@@ -74,4 +74,34 @@ def processSubmisson(request):
 
 	else:
 		return Response(status.HTTP_400_BAD_REQUEST)
+
+@ensure_csrf_cookie
+@api_view(['GET'])
+def convertData(request):
+    if request.method == 'GET':
+        database = postgres()
+        data = database.convertTOFloat(request.data)
+        floatData = convert(data)
+        database.insertToFloat(floatData)
+        n = neighbour()
+        knn = n.calculateKNN()
+        return Response(data)
+        
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
+        
+        
+def convert(self,data):
+    
+    return Response(data)
+    
+@api_view(['GET'])		
+def getPriority(request):
+    if request.method == 'GET':
+        database = postgres()
+        data = database.Classify(request.data)
+        return Response(data)
+        
+    else:
+        return Response(status.HTTP_400_BAD_REQUEST)
 		

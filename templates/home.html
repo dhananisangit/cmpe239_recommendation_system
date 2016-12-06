@@ -282,7 +282,6 @@
 
                 $scope.calculateRec = function(){
                     $scope.recData = [];
-                    console.log($scope.user_id);
                       $http({
                         method:"POST",
                         url:'v1/getallrecs',
@@ -291,25 +290,20 @@
                             challenge_id:$scope.challengeData.challenge_id
                         },
                         }).then(function(res){
-                            // console.log(res.data);
-
                             for (var i = 0; i < res.data.length; i++) {
-                                for (var j=0; j<res.data[i].length; j++){
-                                   for (var k=0; j<res.data[i][j].length; k++){
-                                        $scope.recData.push({
-                                            'challenge_id':res.data[i][j][0],
-                                            'domain':res.data[i][j][1],
-                                            'subdomain':res.data[i][j][2],
-                                            'difficulty':res.data[i][j][3],
-                                            'solved':res.data[i][j][4],
-                                            'attempted':res.data[i][j][5]
-                                        });
-                                    } 
+                                if(res.data[i][0]!=undefined){
+                                    $scope.recData.push({
+                                        'challenge_id':res.data[i][0][0],
+                                        'domain':res.data[i][0][1],
+                                        'subdomain':res.data[i][0][2],
+                                        'difficulty':res.data[i][0][3],
+                                        'solved':res.data[i][0][4],
+                                        'attempted':res.data[i][0][5]
+                                    });
                                 }
                                 
                             }
                         });
-                        console.log($scope.recData);
                     $scope.challengeInfo_Display = false;
                     $scope.challengeTable_Display = false;
                     $scope.recTable_Display = true;
