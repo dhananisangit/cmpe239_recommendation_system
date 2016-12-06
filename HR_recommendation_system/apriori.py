@@ -20,24 +20,24 @@ class apriori():
             _itemSet = set()
             localSet = defaultdict(int)
 
-            for item in itemSet:
-                    for transaction in transactionList:
-                            if item.issubset(transaction):
-                                    freqSet[item] += 1
-                                    localSet[item] += 1
+        for item in itemSet:
+            for transaction in transactionList:
+                    if item.issubset(transaction):
+                            freqSet[item] += 1
+                            localSet[item] += 1
 
-            for item, count in localSet.items():
-                    support = float(count)/len(transactionList)
+        for item, count in localSet.items():
+            support = float(count)/len(transactionList)
 
-                    if support >= minSupport:
-                            _itemSet.add(item)
+            if support >= minSupport:
+                    _itemSet.add(item)
 
-            return _itemSet
+        return _itemSet
 
 
     def joinSet(itemSet, length):
             """Join a set with itself and returns the n-element itemsets"""
-            return set([i.union(j) for i in itemSet for j in itemSet if len(i.union(j)) == length])
+        return set([i.union(j) for i in itemSet for j in itemSet if len(i.union(j)) == length])
 
 
     def getItemSetTransactionList(data_iterator):
@@ -105,7 +105,7 @@ class apriori():
 
     def getSupport(item):
             """local function which Returns the support of an item"""
-            return float(freqSet[item])/len(transactionList)
+        return float(freqSet[item])/len(transactionList)
             
     def generateResults(items, rules):
         """returns the generated itemsets sorted by support and the confidence rules sorted by confidence"""
@@ -115,32 +115,32 @@ class apriori():
         return pre, post, support
 
 
-    def dataFromFile(fname):
+    def dataFromDatabase(fname):
             """Function which reads from the file and yields a generator"""
-            file_iter = open(fname, 'rU')
-            for line in file_iter:
-                    line = line.strip().rstrip(',')                         # Remove trailing comma
-                    record = frozenset(line.split(','))
-                    yield record
+        file_iter = open(fname, 'rU')
+        for line in file_iter:
+            line = line.strip().rstrip(',')                         # Remove trailing comma
+            record = frozenset(line.split(','))
+            yield record
 
 
-    if __name__ == "__main__":
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * from submissions")
-            submissions_df = cursor.fetchall()
+if __name__ == "__main__":
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * from submissions")
+        submissions_df = cursor.fetchall()
 
-        inFile = None
-        if submissions_df.input is None:
-                inFile = sys.stdin
-        elif submissions_df.input is not None:
-                inFile = dataFromFile(submissions_df.input)
-        else:
-                print 'No dataset filename specified, system with exit\n'
-                sys.exit('System will exit')
+    inFile = None
+    if submissions_df.input is None:
+            inFile = sys.stdin
+    elif submissions_df.input is not None:
+            inFile = dataFromFile(submissions_df.input)
+    else:
+            print 'No dataset filename specified, system with exit\n'
+            sys.exit('System will exit')
 
-        minSupport = submissions_df.minS
-        minConfidence = submissions_df.minC
+    minSupport = submissions_df.minS
+    minConfidence = submissions_df.minC
 
-        items, rules = runApriori(inFile, minSupport, minConfidence)
+    items, rules = runApriori(inFile, minSupport, minConfidence)
 
-        generateResults(items, rules)
+    generateResults(items, rules)
